@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080709">
+<title>A // Arquivo confidencial</title>
+<style>
+:root{--bg:#080709;--panel:#111014;--red:#b30e2f;--pale:#e8e1e5;--muted:#938b93;--line:#3a1822}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(ellipse at 50% 0%,#280913 0%,#0a080b 43%,#050506 100%);color:var(--pale);font-family:Arial,Helvetica,sans-serif;letter-spacing:.02em}
+body:after{content:"";pointer-events:none;position:fixed;inset:0;opacity:.13;background-image:repeating-linear-gradient(0deg,transparent 0 3px,#fff 4px,transparent 5px);z-index:10}
+.hidden{display:none!important}
+button,input{font:inherit}
+#gate{min-height:100svh;display:grid;place-items:center;padding:24px}
+.terminal{width:min(680px,100%);border:1px solid #572031;background:rgba(8,7,10,.94);box-shadow:0 0 55px #690b2633;padding:clamp(22px,5vw,44px);position:relative}
+.terminal:before{content:"";position:absolute;top:-1px;left:24px;right:24px;height:2px;background:var(--red);box-shadow:0 0 15px var(--red)}
+.kicker,.mono,.tag{font-family:"Courier New",monospace;text-transform:uppercase;letter-spacing:.15em}
+.kicker{font-size:12px;color:#e24b6a}
+h1{font-size:clamp(38px,9vw,72px);line-height:.9;margin:20px 0 12px;letter-spacing:-.06em}
+.glitch{color:#fff;text-shadow:2px 0 #a20c31,-2px 0 #3a6a74}
+.terminal p{color:#b9adb5;line-height:1.65}
+.status{font-family:monospace;color:#f06b86;font-size:12px;margin:25px 0 12px}
+.formline{display:flex;gap:8px;margin-top:12px}
+input{min-width:0;flex:1;background:#0c0b0e;border:1px solid #59303a;color:white;padding:14px}
+button{background:var(--red);border:1px solid #e44c6b;color:white;padding:13px 18px;cursor:pointer;font-weight:bold}
+button:hover{background:#d0163c}
+#err{min-height:20px;color:#ff718c;font:12px monospace;margin-top:10px}
+main{max-width:1120px;margin:auto;padding:0 22px 50px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:24px 0;border-bottom:1px solid var(--line);font:12px monospace;letter-spacing:.15em;color:#d8cbd1}
+nav a{color:#d8cbd1;text-decoration:none;margin-left:18px}
+.hero{padding:clamp(55px,10vw,115px) 0 60px;text-align:center}
+.stamp{display:inline-block;border:1px solid #772239;color:#ed6682;padding:8px 12px;font:11px monospace;letter-spacing:.18em;transform:rotate(-2deg)}
+.hero h2{font-size:clamp(42px,10vw,100px);letter-spacing:-.075em;line-height:.86;margin:30px 0 20px}
+.hero h2 span{color:#c20d37}
+.hero p{max-width:650px;margin:0 auto;color:#b4a7af;line-height:1.7}
+.warning{margin:0 auto 65px;border:1px solid var(--line);padding:18px 20px;display:flex;gap:14px;align-items:flex-start;background:#110b0f;max-width:850px}
+.warning b{color:#ed6682;font-family:monospace}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:15px;border-bottom:1px solid var(--line);padding-bottom:15px;margin-bottom:25px}
+.section-head h3{margin:0;font-size:clamp(23px,5vw,36px);letter-spacing:-.04em}
+.section-head span{font:11px monospace;color:#d94a68}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.card{background:linear-gradient(180deg,#171116,#0b090c);border:1px solid #38202a;position:relative;overflow:hidden}
+.card img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;filter:saturate(.72) contrast(1.08);transition:filter .25s,transform .5s}
+.card:hover img{filter:saturate(1) contrast(1.08);transform:scale(1.025)}
+.card-body{padding:20px}
+.tag{font-size:10px;color:#e65b79}
+.card h4{font-size:28px;margin:10px 0 8px}
+.card p{color:#b3a6ae;font-size:14px;line-height:1.6;margin:0}
+.index{position:absolute;top:12px;left:12px;background:#080709d9;border:1px solid #7c253c;padding:7px 9px;font:11px monospace}
+.quote{margin:70px 0;padding:clamp(25px,6vw,55px);text-align:center;border-top:1px solid #672036;border-bottom:1px solid #672036;background:linear-gradient(90deg,transparent,#1a0910,transparent)}
+.quote small{font:11px monospace;color:#ed6682;letter-spacing:.2em}
+.quote blockquote{font-family:Georgia,serif;font-size:clamp(24px,5vw,42px);font-style:italic;line-height:1.25;margin:22px auto;max-width:780px}
+.quote p{font:12px monospace;color:#a99aa3}
+footer{border-top:1px solid var(--line);padding:24px 0;color:#817780;font:11px monospace;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+@media(max-width:720px){.cards{grid-template-columns:1fr;max-width:520px;margin:auto}.card img{aspect-ratio:4/3}.card{display:grid;grid-template-columns:42% 58%}.card img{height:100%;min-height:245px}.card-body{padding:16px 13px}.card h4{font-size:24px}.formline{flex-direction:column}nav{align-items:flex-start;gap:14px;flex-direction:column}nav a{margin:0 14px 0 0}}
+</style>
+</head>
+<body>
+<section id="gate">
+  <div class="terminal">
+    <div class="kicker">Conexão não autorizada // CG-001</div>
+    <h1 class="glitch">QUEM ESTÁ<br>OBSERVANDO?</h1>
+    <p>Um arquivo foi interceptado. Identidade não confirmada. Digite a chave para acessar o dossiê.</p>
+    <div class="status">[ SISTEMA ] aguardando autenticação<span id="dots">...</span></div>
+    <form id="login">
+      <div class="formline">
+        <input id="password" type="password" placeholder="CHAVE DE ACESSO" autocomplete="off" aria-label="Senha" required>
+        <button type="submit">DESBLOQUEAR</button>
+      </div>
+      <div id="err" role="status"></div>
+    </form>
+    <p class="mono" style="font-size:10px;margin-top:26px">AVISO: ESTE ARQUIVO É FICCIONAL. ACESSO MONITORADO POR A.</p>
+  </div>
+</section>
+<main id="site" class="hidden">
+  <nav><div>A // CAMPO GRANDE</div><div><a href="#dossies">DOSSIÊS</a><a href="#mensagens">MENSAGENS</a></div></nav>
+  <header class="hero">
+    <div class="stamp">ARQUIVO CONFIDENCIAL · 00:00:01</div>
+    <h2>EU SEI.<br><span>VOCÊS</span> TAMBÉM.</h2>
+    <p>Três nomes. Três versões. Um monte de coisas que ninguém fala em voz alta. Não confundam silêncio com esquecimento.</p>
+  </header>
+  <div class="warning"><b>ATENÇÃO // A</b><div>Vocês foram adicionadas ao arquivo. Isto é uma página de terror ficcional feita entre amigos. Os segredos aqui são parte da brincadeira, não acusações reais.</div></div>
+  <section id="dossies">
+    <div class="section-head"><h3>Arquivos monitorados</h3><span>3 REGISTROS ENCONTRADOS</span></div>
+    <div class="cards">
+      <article class="card"><span class="index">FILE_001</span><img src="fotos/isis.jpeg" alt="Foto do arquivo de Isis"><div class="card-body"><div class="tag">ALVO // 01</div><h4>Isis</h4><p><b>Codinome:</b> A Vadia<br>Todo mundo tem uma versão da história. A pergunta é quem está contando a sua.</p></div></article>
+      <article class="card"><span class="index">FILE_002</span><img src="fotos/anne.jpeg" alt="Foto do arquivo de Anne"><div class="card-body"><div class="tag">ALVO // 02</div><h4>Anne</h4><p><b>Codinome:</b> A Promíscua<br>Algumas pistas aparecem quando você menos quer. Outras estavam bem na sua frente.</p></div></article>
+      <article class="card"><span class="index">FILE_003</span><img src="fotos/isabella.jpeg" alt="Foto do arquivo de Isabella"><div class="card-body"><div class="tag">ALVO // 03</div><h4>Isabella</h4><p><b>Codinome:</b> A Cobra<br>Confiança é uma coisa engraçada. Leva anos para construir e um segundo para virar suspeita.</p></div></article>
+    </div>
+  </section>
+  <section class="quote" id="mensagens"><small>✉ NOVA MENSAGEM RECEBIDA</small><blockquote>“Uma vadia, uma cobra e uma promíscua sempre guardam segredos. Mas até onde irão durar?”</blockquote><p>BEIJOS, -A</p></section>
+  <section class="quote"><small>✉ MENSAGEM 002</small><blockquote>“Não olhem por cima do ombro. Eu já estou bem à frente de vocês.”</blockquote><p>BEIJOS, -A</p></section>
+  <footer><span>CAMPO GRANDE // ARQUIVO A</span><span>FICÇÃO DE TERROR · NÃO É UM SITE OFICIAL</span></footer>
+</main>
+<script>
+const form=document.getElementById('login');
+form.addEventListener('submit',function(e){
+ e.preventDefault();
+ const value=document.getElementById('password').value;
+ if(value==='umavezvadiassemprevadias'){
+  document.getElementById('gate').classList.add('hidden');
+  document.getElementById('site').classList.remove('hidden');
+  window.scrollTo(0,0);
+ }else{
+  document.getElementById('err').textContent='CHAVE INCORRETA. TENTE NOVAMENTE.';
+  document.getElementById('password').value='';
+ }
+});
+</script>
+</body>
+</html>
